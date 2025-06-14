@@ -72,18 +72,30 @@ function Header() {
                 Contact Us
               </Link>
             </li>
+
             {session ? (
-              <li className="pl-0 sm:pl-7 sm:border-l-2">
-                <button
-                  className="bg-customBlue text-white py-3 px-4 block text-center sm:inline-block"
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                    signOut({ callbackUrl: "/signin" });
-                  }}
-                >
-                  Sign Out
-                </button>
-              </li>
+              <>
+                <li>
+                  <Link
+                    href="/dashboard"
+                    className="bg-green-600 text-white py-3 px-4 block text-center sm:inline-block rounded hover:bg-green-500"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Dashboard
+                  </Link>
+                </li>
+                <li className="pl-0 sm:pl-7 sm:border-l-2">
+                  <button
+                    className="bg-customBlue text-white py-3 px-4 block text-center sm:inline-block"
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      signOut({ callbackUrl: "/signin" });
+                    }}
+                  >
+                    Sign Out
+                  </button>
+                </li>
+              </>
             ) : (
               <li className="pl-0 sm:pl-7 sm:border-l-2">
                 <Link

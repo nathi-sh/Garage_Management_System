@@ -1,5 +1,5 @@
 const { get } = require('../routes/order.routes');
-const orderService = require('../services/order.service');
+const orderService = require('../Services/order.service');
 
 // Create and Save a new Order
 async function createOrder(req, res) {

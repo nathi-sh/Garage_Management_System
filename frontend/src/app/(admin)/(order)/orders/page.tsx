@@ -4,6 +4,12 @@ import { useSelector } from "react-redux";
 import { useGetOrdersQuery } from "@/features/api/apiSlice";
 import { RootState } from "@/store/store";
 
+// Map numeric order status to label and color
+const statusConfig: Record<number, { label: string; color: string }> = {
+  0: { label: "In Progress", color: "bg-yellow-500" },
+  1: { label: "Completed", color: "bg-green-600" },
+};
+
 const OrdersPage = () => {
   const auth = useSelector((state: RootState) => state.auth);
   console.log("auth", auth);
@@ -19,6 +25,7 @@ const OrdersPage = () => {
       setPage(page + 1);
     }
   };
+
   const handlePreviousPage = () => {
     if (page > 1) {
       setPage(page - 1);
@@ -33,10 +40,8 @@ const OrdersPage = () => {
 
   return (
     <div className="flex flex-col min-h-screen px-4 md:px-10 py-8">
-      {/* Page Title */}
       <h1 className="text-3xl font-bold text-customBlue mb-6">Orders</h1>
 
-      {/* Table Container - Ensures Responsiveness */}
       <div className="flex-grow overflow-auto">
         <table className="w-full bg-white border border-gray-200 text-sm md:text-base">
           <thead>
@@ -51,8 +56,8 @@ const OrdersPage = () => {
             </tr>
           </thead>
           <tbody>
-            {(orders?.data?? []).length > 0 ? (
-              orders?.data?.map((order) => (
+            {(orders?.data ?? []).length > 0 ? (
+              orders.data.map((order) => (
                 <tr key={order.order_id} className="odd:bg-white even:bg-gray-100">
                   <td className="py-3 px-2 border border-gray-300 text-center">{order.order_id}</td>
                   <td className="py-3 px-2 border border-gray-300 text-center">{order.customer_name}</td>
@@ -65,10 +70,10 @@ const OrdersPage = () => {
                   <td className="py-3 px-2 border border-gray-300 text-center w-32 whitespace-nowrap overflow-hidden text-ellipsis">
                     <span
                       className={`px-3 py-1 rounded text-white text-xs font-semibold ${
-                        order.order_status ? "bg-green-600" : "bg-yellow-500"
+                        statusConfig[order.order_status]?.color || "bg-gray-400"
                       }`}
                     >
-                      {order.order_status ? "Completed" : "In Progress"}
+                      {statusConfig[order.order_status]?.label || "Unknown"}
                     </span>
                   </td>
                 </tr>
@@ -84,7 +89,6 @@ const OrdersPage = () => {
         </table>
       </div>
 
-      {/* Pagination Controls */}
       <div className="flex justify-center mt-6 space-x-4">
         <button
           className="px-6 py-2 rounded-lg border border-gray-300 bg-gray-100 hover:bg-gray-200 text-customBlue font-semibold disabled:opacity-50"

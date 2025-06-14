@@ -1,6 +1,6 @@
 const {query}=require("../config/db.config")
 
-const empoyeeData=require("../services/employee.service")
+const empoyeeData=require("../Services/employee.service")
 
 const bcrypt=require("bcrypt")
 
