@@ -70,6 +70,10 @@ async function createCustomer(customer){
 
 }
 
+
+
+
+
 async function getCustomer(customer_id){
     
     const sql=`SELECT 
